@@ -25,3 +25,6 @@ hs_err_pid*
 /EXPolimorfismo/build/
 /Animal/nbproject/private/
 /Animal/build/
+/ExArrayList/nbproject/private/
+/ExArrayList/build/
+/ExArrayList/dist/
