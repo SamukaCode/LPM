@@ -23,7 +23,6 @@ public class ExArrayList {
         for (Conta c: lista)
         {
             c.mostra();
-            
             System.out.println(c.getSaldo());
             if (c instanceof Poupanca) {
                 Poupanca p = (Poupanca)c;
@@ -36,5 +35,4 @@ public class ExArrayList {
             }
         }
     }
-    
 }
