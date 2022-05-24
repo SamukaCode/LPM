@@ -13,6 +13,9 @@ public class Quadrado extends FormaGeometrico implements IForma, IBidimensional 
     }
 
     public Quadrado(double lado) {
+        if (lado<=0)
+            throw new IllegalArgumentException("Valor inválido, o valor esperado é maior que 0 (zero).");
+        else
         this.lado = lado;
     }
     
@@ -21,21 +24,6 @@ public class Quadrado extends FormaGeometrico implements IForma, IBidimensional 
         setArea(lado*lado);
         return getArea();
         
-    }
-
-    @Override
-    public double calcPerimetro() {
-        return lado*4;
-    }
-
-    @Override
-    public double calcSeccao() {
-        return 0;
-    }
-
-    @Override
-    public void mostrar() {
-        System.out.println("É um quadrado!");
     }
 
     @Override
