@@ -47,26 +47,23 @@ public class MarketSystem {
         System.out.println("Qual a Idade do Cliente?");
         int idade = input.nextInt();
         
-        input.nextLine();
-        
         System.out.println("Qual o CPF do Cliente?");
         int cpf = input.nextInt();
         
-        input.nextLine();
-        
         System.out.println("Qual o telefone do Cliente?");
         int telefone = input.nextInt();
+        clearBuffer(input);
         
         System.out.println("Qual o Email do Cliente?");
         String email = input.nextLine();
         
-        if (nome == null||idade<0||cpf<0||telefone<0)
+        if (nome == null||idade<0||cpf<0||telefone<0||email == null)
         {
             System.out.println("Um dos dados informados está inválido. Não são permitidos valores vazios ou negativos.");
         }
         else {
             id++;
-            Cliente c = new Cliente(id, nome, idade, cpf, telefone); 
+            Cliente c = new Cliente(email, id, nome, idade, cpf, telefone); 
             clientArray.add(c);
         }
         System.out.println("Operação Finalizada. Deseja voltar ao item de adicionar cliente? 1 = Sim; 2 = Não");
@@ -130,9 +127,9 @@ public class MarketSystem {
             }
     
     public static void mostraCliente() {
-        System.out.println("  ===========================================\n" + "| ID | NOME COMPLETO | IDADE | CPF | TELEFONE |\n" + "  -------------------------------------------");
-        System.out.println("| 12 | João Arquimedes | 12 | 12356356234 | 126262346243 |");
-        System.out.println("| 12 | Maria Joaquina | 12 | 12356356234 | 126262346243 |");
+        System.out.println("  ===========================================\n" + "| ID | NOME COMPLETO | IDADE | CPF | TELEFONE |  EMAIL  |\n" + "  -------------------------------------------");
+        System.out.println("| 12 | João Arquimedes | 12 | 12356356234 | 126262346243 | joao@gamil.com");
+        System.out.println("| 12 | Maria Joaquina | 12 | 12356356234 | 126262346243 | maria@gmail.com");
         for (Cliente c: clientArray) {
             c.exibir();
         }
@@ -140,6 +137,12 @@ public class MarketSystem {
         System.out.println("\nOperação Finalizada. Voltando ao menu.");
         menu();
         
+    }
+    
+      private static void clearBuffer(Scanner scanner) {
+        if (scanner.hasNextLine()) {
+            scanner.nextLine();
+        }
     }
     
     public static void main(String[] args) {
