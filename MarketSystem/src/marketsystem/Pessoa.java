@@ -1,18 +1,18 @@
 package marketsystem;
 
 public abstract class Pessoa {
+    protected int id;
     protected String nome;
     protected int idade;
     protected int cpf;
     protected int telefone;
-    protected String email;
     
-    public Pessoa(String nome, int idade, int cpf, int telefone, String email) {
+    public Pessoa(int id,String nome, int idade, int cpf, int telefone) {
         this.nome = nome;
         this.idade = idade;
         this.cpf = cpf;
         this.telefone = telefone;
-        this.email = email;
+        this.id = id;
     }
     
     public String getNome() {
@@ -47,12 +47,12 @@ public abstract class Pessoa {
         this.telefone = telefone;
     }
 
-    public String getEmail() {
-        return email;
+    public int getId() {
+        return id;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setId(int id) {
+        this.id = id;
     }
     
 }
