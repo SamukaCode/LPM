@@ -59,6 +59,104 @@ public class MarketSystem {
         idf=0;
     }
     
+    public static void buscaFuncionario() {
+        input.nextLine();
+        
+        boolean found=false;
+        
+        System.out.println("Digite o nome (ou parte do nome) do funcionário");
+        String pt = input.nextLine();
+        
+        for(Funcionario f: funcArray) {
+            if (f.getNome().contains(pt)) {
+                f.exibir();
+                found=true;
+                break;
+            }
+        }
+        
+        if (!found) {
+            System.out.println("Nenhum registro encontrado. Deseja reiniciar a operação ou sair? 1 = Reiniciar; 2 = Sair.");
+            int a = input.nextInt();
+            switch(a) {
+                case 1:
+                    buscaFuncionario();
+                    break;
+                case 2:
+                    menu();
+                    break;
+                default:
+                    System.out.println("Entrada inválida. Por padrão, voltando ao menu.");
+                    menu();
+            }
+        }
+        
+        System.out.println("Operação Finalizada. Deseja voltar ao item buscar funcionário? 1 = Sim; 2 = Não");
+        int s = input.nextInt();
+        switch (s) {
+            case 1:
+                buscaFuncionario();
+                break;
+            case 2:
+                menu();
+                break;
+            default:
+                System.out.println("Não é uma entrada válida. Por padrão, voltando ao menu.");
+                menu();
+                break;
+        }
+        
+    }
+    
+    public static void buscaCliente() {
+        input.nextLine();
+        
+        boolean found=false;
+        
+        System.out.println("Digite o nome (ou parte do nome) do cliente");
+        String pt = input.nextLine();
+        
+        for(Cliente c: clientArray) {
+            if (c.getNome().contains(pt)) {
+                c.exibir();
+                found=true;
+                break;
+            }
+        }
+        
+        if (!found) {
+            System.out.println("Nenhum registro encontrado. Deseja reiniciar a operação ou sair? 1 = Reiniciar; 2 = Sair.");
+            int a = input.nextInt();
+            switch(a) {
+                case 1:
+                    buscaCliente();
+                    break;
+                case 2:
+                    menu();
+                    break;
+                default:
+                    System.out.println("Entrada inválida. Por padrão, voltando ao menu.");
+                    menu();
+            }
+        }
+        
+        System.out.println("Operação Finalizada. Deseja voltar ao item buscar cliente? 1 = Sim; 2 = Não");
+        int s = input.nextInt();
+        switch (s) {
+            case 1:
+                buscaCliente();
+                break;
+            case 2:
+                menu();
+                break;
+            default:
+                System.out.println("Não é uma entrada válida. Por padrão, voltando ao menu.");
+                menu();
+                break;
+        }
+        
+    }
+    
     public static void cadastrarCliente() {
         input.nextLine();
         
@@ -99,6 +197,8 @@ public class MarketSystem {
                 menu();
                 break;
         }
+        
+       
     }
     
     public static void cadastrarFuncionario() {
