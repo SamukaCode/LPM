@@ -7,7 +7,7 @@ public abstract class Pessoa {
     protected int cpf;
     protected int telefone;
     
-    public Pessoa(int id,String nome, int idade, int cpf, int telefone) {
+    public Pessoa(int id, String nome, int idade, int cpf, int telefone) {
         this.nome = nome;
         this.idade = idade;
         this.cpf = cpf;
