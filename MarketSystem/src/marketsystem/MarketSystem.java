@@ -15,12 +15,17 @@ public class MarketSystem {
         System.out.println("1 - Cadastrar Cliente");
         System.out.println("2 - Remover Cliente");
         System.out.println("3 - Mostrar Clientes");
-        System.out.println("4 - Mostrar Funcionários");
-        System.out.println("5 - Cadastrar Funcionário");
-        System.out.println("6 - Remover Funcionário");
-        System.out.println("7 - Mostrar Produtos");
-        System.out.println("8 - Cadastrar Produto");
-        System.out.println("9 - Remover Produto");
+        System.out.println("4 - Busca Cliente");
+        System.out.println("5 - Mostrar Funcionários");
+        System.out.println("6 - Cadastrar Funcionário");
+        System.out.println("7 - Remover Funcionário");
+        System.out.println("8 - Busca Funcionário");
+        System.out.println("9 - Mostrar Produtos");
+        System.out.println("10 - Cadastrar Produto");
+        System.out.println("11 - Remover Produto");
+        System.out.println("12 - Buscar Produto pela Descrição");
+        System.out.println("13 - Buscar Produto pelo Código");
+        System.out.println("14 - Buscar Produto pelo Valor");
         int i = input.nextInt();
         
         switch(i) {
@@ -34,14 +39,38 @@ public class MarketSystem {
                 mostraCliente();
                 break;
             case 4:
+                buscaCliente();
+                break
+            case 5:
                 mostraFuncionario();
                 break;
-            case 5:
+            case 6:
                 cadastrarFuncionario();
                 break;
-            case 6:
+            case 7:
                 apagarFuncionario();
                 break;
+            case 8:
+                buscaFuncionario();
+            case 9:
+                mostraProduto();
+                break;
+            case 10:
+                cadastrarProduto();
+                break;
+            case 11:
+                apagarProduto();
+                break;
+            case 12:
+                buscaProdutoDesc();
+                break;
+            case 13:
+                buscaProdutoCod();
+                break;
+            case 14:
+                buscaProdutoValor();
+                break;
+               
                 
                 // Reajustar, Alinhar e afins.
                 
@@ -206,15 +235,19 @@ public class MarketSystem {
         
         System.out.println("Qual o nome do funcionário?");
         String nome = input.nextLine();
-        input.nextLine();
+        clearBuffer(input);
         System.out.println("Qual a idade do funcionário?");
         int idade = input.nextInt();
+        clearBuffer(input);
         System.out.println("Qual o CPF do funcionário?");
         int cpf = input.nextInt();
+        clearBuffer(input);
         System.out.println("Qual o telefone do funcionário?");
         int telefone = input.nextInt();
+        clearBuffer(input);
         System.out.println("Qual o email do funcionário?");
         String email = input.nextLine();
+        clearBuffer(input);
         
         if (nome == null||idade<0||cpf<0||telefone<0||email == null)
         {
@@ -284,6 +317,7 @@ public class MarketSystem {
         }
     }
     
+    
     public static void apagarCliente() {
         input.nextLine();
         boolean found=false;
@@ -348,14 +382,19 @@ public class MarketSystem {
         input.nextLine();
         System.out.println("Qual o código do produto?");
         long cod = input.nextLong();
+        clearBuffer(input);
         System.out.println("Qual a marca do produto?");
         String marca = input.nextLine();
+        clearBuffer(input);
         System.out.println("Qual a descrição do produto?");
         String desc = input.nextLine();
+        clearBuffer(input);
         System.out.println("Em qual corredor o produto está?");
         int corredor = input.nextInt();
+        clearBuffer(input);
         System.out.println("Qual o preço do produto?");
         double valor = input.nextDouble();
+        clearBuffer(input);
         
         if (marca == null||corredor<0||valor<0||cod<0||desc == null)
         {
@@ -431,6 +470,198 @@ public class MarketSystem {
         }
         System.out.println("\nOperação Finalizada. Voltando ao menu.");
         menu();
+    }
+    
+    public static void buscaProdutoDesc() {
+        input.nextLine();
+        
+        boolean found=false;
+        
+        System.out.println("Digite a descrição (ou parte da descrição) do produto");
+        String desc = input.nextLine();
+        
+        for(Produto p: productArray) {
+            if (p.getDesc().contains(desc)) {
+                p.exibir();
+                found=true;
+                break;
+            }
+        }
+        
+        if (!found) {
+            System.out.println("Nenhum registro encontrado. Deseja reiniciar a operação ou sair? 1 = Reiniciar; 2 = Sair.");
+            int a = input.nextInt();
+            switch(a) {
+                case 1:
+                    buscaProdutoDesc();
+                    break;
+                case 2:
+                    menu();
+                    break;
+                default:
+                    System.out.println("Entrada inválida. Por padrão, voltando ao menu.");
+                    menu();
+            }
+        }
+        
+        System.out.println("Operação Finalizada. Deseja voltar ao item buscar cliente? 1 = Sim; 2 = Não");
+        int s = input.nextInt();
+        switch (s) {
+            case 1:
+                buscaProdutoDesc();
+                break;
+            case 2:
+                menu();
+                break;
+            default:
+                System.out.println("Não é uma entrada válida. Por padrão, voltando ao menu.");
+                menu();
+                break;
+        }
+        
+    }
+    
+    public static void buscaProdutoCod() {
+        input.nextLine();
+        
+        boolean found=false;
+        
+        System.out.println("Digite o código do produto");
+        long cod = input.nextLong();
+        
+        for(Produto p: productArray) {
+            if (p.getCod() == cod) {
+                p.exibir();
+                found=true;
+                break;
+            }
+        }
+        
+        if (!found) {
+            System.out.println("Nenhum registro encontrado. Deseja reiniciar a operação ou sair? 1 = Reiniciar; 2 = Sair.");
+            int a = input.nextInt();
+            switch(a) {
+                case 1:
+                    buscaProdutoCod();
+                    break;
+                case 2:
+                    menu();
+                    break;
+                default:
+                    System.out.println("Entrada inválida. Por padrão, voltando ao menu.");
+                    menu();
+            }
+        }
+        
+        System.out.println("Operação Finalizada. Deseja voltar ao item buscar cliente? 1 = Sim; 2 = Não");
+        int s = input.nextInt();
+        switch (s) {
+            case 1:
+                buscaProdutoCod();
+                break;
+            case 2:
+                menu();
+                break;
+            default:
+                System.out.println("Não é uma entrada válida. Por padrão, voltando ao menu.");
+                menu();
+                break;
+        }
+        
+    }
+    
+    public static void buscaProdutoValor() {
+        input.nextLine();
+        
+        boolean found=false;
+        
+        System.out.println("Digite o preço do produto");
+        double val = input.nextDouble();
+        
+        for(Produto p: productArray) {
+            if (p.getValor() == val) {
+                p.exibir();
+                found=true;
+                break;
+            }
+        }
+        
+        if (!found) {
+            System.out.println("Nenhum registro encontrado. Deseja reiniciar a operação ou sair? 1 = Reiniciar; 2 = Sair.");
+            int a = input.nextInt();
+            switch(a) {
+                case 1:
+                    buscaProdutoValor();
+                    break;
+                case 2:
+                    menu();
+                    break;
+                default:
+                    System.out.println("Entrada inválida. Por padrão, voltando ao menu.");
+                    menu();
+            }
+        }
+        
+        System.out.println("Operação Finalizada. Deseja voltar ao item buscar cliente? 1 = Sim; 2 = Não");
+        int s = input.nextInt();
+        switch (s) {
+            case 1:
+                buscaProdutoValor();
+                break;
+            case 2:
+                menu();
+                break;
+            default:
+                System.out.println("Não é uma entrada válida. Por padrão, voltando ao menu.");
+                menu();
+                break;
+        }
+       
+    public static void maiorValor() {
+        input.nextLine();
+        
+        boolean found=false;
+        
+        int maior = productArray.get(0);
+        for (int i = 1; i < productArray.size(); i++) {
+            if (maior < getValor(i))
+                maior = getValor(i);
+        }
+        }
+        System.out.printf("Maior número é %d", maior);
+        
+        if (!found) {
+            System.out.println("Nenhum registro encontrado. Deseja reiniciar a operação ou sair? 1 = Reiniciar; 2 = Sair.");
+            int a = input.nextInt();
+            switch(a) {
+                case 1:
+                    buscaProdutoValor();
+                    break;
+                case 2:
+                    menu();
+                    break;
+                default:
+                    System.out.println("Entrada inválida. Por padrão, voltando ao menu.");
+                    menu();
+            }
+        }
+        
+        System.out.println("Operação Finalizada. Deseja voltar ao item buscar cliente? 1 = Sim; 2 = Não");
+        int s = input.nextInt();
+        switch (s) {
+            case 1:
+                buscaProdutoValor();
+                break;
+            case 2:
+                menu();
+                break;
+            default:
+                System.out.println("Não é uma entrada válida. Por padrão, voltando ao menu.");
+                menu();
+                break;
+        }
+        
+        
     }
     
       private static void clearBuffer(Scanner scanner) {
