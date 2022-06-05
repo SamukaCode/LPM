@@ -11,21 +11,34 @@ public class MarketSystem {
     private static int idc,idf;
     
     public static void menu() {
-        System.out.println("MENU: Qual item você quer acessar?");
+        System.out.println("\nMENU: Qual item você quer acessar?\n");
         System.out.println("1 - Cadastrar Cliente");
         System.out.println("2 - Remover Cliente");
         System.out.println("3 - Mostrar Clientes");
-        System.out.println("4 - Busca Cliente");
-        System.out.println("5 - Mostrar Funcionários");
-        System.out.println("6 - Cadastrar Funcionário");
-        System.out.println("7 - Remover Funcionário");
-        System.out.println("8 - Busca Funcionário");
-        System.out.println("9 - Mostrar Produtos");
-        System.out.println("10 - Cadastrar Produto");
-        System.out.println("11 - Remover Produto");
-        System.out.println("12 - Buscar Produto pela Descrição");
-        System.out.println("13 - Buscar Produto pelo Código");
-        System.out.println("14 - Buscar Produto pelo Valor");
+        System.out.println("4 - Busca Cliente\n");
+        
+        System.out.println("5 - Cadastrar Funcionários");
+        System.out.println("6 - Remover Funcionário");
+        System.out.println("7 - Mostrar Funcionário");
+        System.out.println("8 - Busca Funcionário\n");
+        
+        System.out.println("9 - Cadastrar Produtos");
+        System.out.println("10 - Remover Produto");
+        System.out.println("11 - Mostrar Produto");
+        System.out.println("12 - Buscar Produto\n");
+        
+        System.out.println("13 - Ver cliente mais jovem");
+        System.out.println("14 - Ver cliente mais velho");
+        System.out.println("15 - Ver quantos clientes são maiores de 60 anos");
+        System.out.println("16 - Ver quantos clientes são menores de 18 anos");
+        System.out.println("17 - Ver a média da idade dos clientes\n");
+        
+        System.out.println("18 - Ver produto mais caro");
+        System.out.println("19 - Ver produto mais barato");
+        System.out.println("20 - Ver média dos preços dos produtos");
+        System.out.println("21 - Ver produtos com preço acima da média\n");
+        
+        System.out.print("Digite o número do item a ser acessado: ");
         int i = input.nextInt();
         
         switch(i) {
@@ -42,39 +55,57 @@ public class MarketSystem {
                 buscaCliente();
                 break;
             case 5:
-                mostraFuncionario();
-                break;
-            case 6:
                 cadastrarFuncionario();
                 break;
-            case 7:
+            case 6:
                 apagarFuncionario();
+                break;
+            case 7:
+                mostraFuncionario();
                 break;
             case 8:
                 buscaFuncionario();
                 break;
             case 9:
-                mostraProduto();
-                break;
-            case 10:
                 cadastrarProduto();
                 break;
-            case 11:
+            case 10:
                 apagarProduto();
                 break;
+            case 11:
+                mostraProduto();
+                break;
             case 12:
-                buscaProdutoDesc();
+                buscaProduto();
                 break;
             case 13:
-                buscaProdutoCod();
+                menorIdade();
                 break;
             case 14:
-                buscaProdutoValor();
+                maiorIdade();
                 break;
-               
-                
-                // Reajustar, Alinhar e afins.
-                
+            case 15:
+                clienteMaior();
+                break;
+            case 16:
+                clienteMenor();
+                break;
+            case 17:
+                idadeMedia();
+                break;
+            case 18:
+                maiorValor();
+                break;
+            case 19:
+                menorValor();
+                break;
+            case 20:
+                mediaValor();
+                break;
+            case 21:
+                acimaMedia();
+                break;
+
             default:
                 System.out.println("Valor inválido. Reiniciando operação.");
                 menu();
@@ -89,16 +120,40 @@ public class MarketSystem {
         idf=0;
     }
     
+    public static void buscaProduto() {
+        System.out.println("\nDeseja buscar produto por qual informação?");
+        System.out.println("1 - Preço");
+        System.out.println("2 - Descrição");
+        System.out.println("3 - Código");
+        System.out.print("\nDigite o número da opção escolhida: ");
+        int a = input.nextInt();
+        switch(a) {
+            case 1:
+                buscaProdutoValor();
+                break;
+            case 2:
+                buscaProdutoDesc();
+                break;
+            case 3:
+                buscaProdutoCod();
+                break;
+            default:
+                System.out.println("Entrada inválida, por padrão, voltando ao menu.");
+                menu();
+        }
+    }
+    
     public static void buscaFuncionario() {
-        input.nextLine();
+        clearBuffer(input);
         
         boolean found=false;
         
-        System.out.println("Digite o nome (ou parte do nome) do funcionário");
+        System.out.println("\nDigite o nome (ou parte do nome) do funcionário: ");
         String pt = input.nextLine();
         
         for(Funcionario f: funcArray) {
             if (f.getNome().contains(pt)) {
+                System.out.println("\nRegistro encontrado:");
                 f.exibir();
                 found=true;
                 break;
@@ -106,7 +161,7 @@ public class MarketSystem {
         }
         
         if (!found) {
-            System.out.println("Nenhum registro encontrado. Deseja reiniciar a operação ou sair? 1 = Reiniciar; 2 = Sair.");
+            System.out.println("\nNenhum registro encontrado. Deseja reiniciar a operação ou sair? 1 = Reiniciar; 2 = Sair.");
             int a = input.nextInt();
             switch(a) {
                 case 1:
@@ -116,12 +171,12 @@ public class MarketSystem {
                     menu();
                     break;
                 default:
-                    System.out.println("Entrada inválida. Por padrão, voltando ao menu.");
+                    System.out.println("\nEntrada inválida. Por padrão, voltando ao menu.");
                     menu();
             }
         }
         
-        System.out.println("Operação Finalizada. Deseja voltar ao item buscar funcionário? 1 = Sim; 2 = Não");
+        System.out.println("\nOperação Finalizada. Deseja buscar mais algum funcionário? 1 = Sim; 2 = Não");
         int s = input.nextInt();
         switch (s) {
             case 1:
@@ -131,7 +186,7 @@ public class MarketSystem {
                 menu();
                 break;
             default:
-                System.out.println("Não é uma entrada válida. Por padrão, voltando ao menu.");
+                System.out.println("\nNão é uma entrada válida. Por padrão, voltando ao menu.");
                 menu();
                 break;
         }
@@ -139,15 +194,16 @@ public class MarketSystem {
     }
     
     public static void buscaCliente() {
-        input.nextLine();
+        clearBuffer(input);
         
         boolean found=false;
         
-        System.out.println("Digite o nome (ou parte do nome) do cliente");
+        System.out.println("\nDigite o nome (ou parte do nome) do cliente:");
         String pt = input.nextLine();
         
         for(Cliente c: clientArray) {
             if (c.getNome().contains(pt)) {
+                System.out.println("\nRegistro encontrado:");
                 c.exibir();
                 found=true;
                 break;
@@ -155,7 +211,7 @@ public class MarketSystem {
         }
         
         if (!found) {
-            System.out.println("Nenhum registro encontrado. Deseja reiniciar a operação ou sair? 1 = Reiniciar; 2 = Sair.");
+            System.out.println("\nNenhum registro encontrado. Deseja reiniciar a operação ou sair? 1 = Reiniciar; 2 = Sair.");
             int a = input.nextInt();
             switch(a) {
                 case 1:
@@ -165,12 +221,12 @@ public class MarketSystem {
                     menu();
                     break;
                 default:
-                    System.out.println("Entrada inválida. Por padrão, voltando ao menu.");
+                    System.out.println("\nEntrada inválida. Por padrão, voltando ao menu.");
                     menu();
             }
         }
         
-        System.out.println("Operação Finalizada. Deseja voltar ao item buscar cliente? 1 = Sim; 2 = Não");
+        System.out.println("\nOperação Finalizada. Deseja buscar mais algum cliente? 1 = Sim; 2 = Não");
         int s = input.nextInt();
         switch (s) {
             case 1:
@@ -180,7 +236,7 @@ public class MarketSystem {
                 menu();
                 break;
             default:
-                System.out.println("Não é uma entrada válida. Por padrão, voltando ao menu.");
+                System.out.println("\nNão é uma entrada válida. Por padrão, voltando ao menu.");
                 menu();
                 break;
         }
@@ -188,32 +244,40 @@ public class MarketSystem {
     }
     
     public static void cadastrarCliente() {
-        input.nextLine();
+        clearBuffer(input);
         
-        System.out.println("Qual o nome do Cliente?");
+        System.out.println("\nQual o nome do Cliente?");
         String nome = input.nextLine();  
         
-        System.out.println("Qual a Idade do Cliente?");
+        clearBuffer(input);
+        
+        System.out.println("\nQual a Idade do Cliente?");
         int idade = input.nextInt();
         
-        System.out.println("Qual o CPF do Cliente?");
+        clearBuffer(input);
+        
+        System.out.println("\nQual o CPF do Cliente?");
         int cpf = input.nextInt();
         
-        System.out.println("Qual o telefone do Cliente?");
+        clearBuffer(input);
+        
+        System.out.println("\nQual o telefone do Cliente?");
         int telefone = input.nextInt();
+        
         clearBuffer(input);
        
         
-        if (nome == null||idade<0||cpf<0||telefone<0)
+        if (nome.isEmpty()||idade<0||cpf<0||telefone<0)
         {
-            System.out.println("Um dos dados informados está inválido. Não são permitidos valores vazios ou negativos.");
+            System.out.println("\nUm dos dados informados está inválido. Não são permitidos valores vazios ou negativos. Reiniciando operação.");
+            cadastrarCliente();
         }
         else {
             idc++;
             Cliente c = new Cliente(idc, nome, idade, cpf, telefone); 
             clientArray.add(c);
         }
-        System.out.println("Operação Finalizada. Deseja voltar ao item de adicionar cliente? 1 = Sim; 2 = Não");
+        System.out.println("\nOperação Finalizada. Deseja adicionar mais algum cliente? 1 = Sim; 2 = Não");
         int s = input.nextInt();
         switch (s) {
             case 1:
@@ -223,7 +287,7 @@ public class MarketSystem {
                 menu();
                 break;
             default:
-                System.out.println("Não é uma entrada válida. Por padrão, voltando ao menu.");
+                System.out.println("\nNão é uma entrada válida. Por padrão, voltando ao menu.");
                 menu();
                 break;
         }
@@ -232,34 +296,44 @@ public class MarketSystem {
     }
     
     public static void cadastrarFuncionario() {
-        input.nextLine();
+        clearBuffer(input);
         
-        System.out.println("Qual o nome do funcionário?");
+        System.out.println("\nQual o nome do funcionário?");
         String nome = input.nextLine();
-        clearBuffer(input);
-        System.out.println("Qual a idade do funcionário?");
-        int idade = input.nextInt();
-        clearBuffer(input);
-        System.out.println("Qual o CPF do funcionário?");
-        int cpf = input.nextInt();
-        clearBuffer(input);
-        System.out.println("Qual o telefone do funcionário?");
-        int telefone = input.nextInt();
-        clearBuffer(input);
-        System.out.println("Qual o email do funcionário?");
-        String email = input.nextLine();
+        
         clearBuffer(input);
         
-        if (nome == null||idade<0||cpf<0||telefone<0||email == null)
+        System.out.println("\nQual a idade do funcionário?");
+        int idade = input.nextInt();
+        
+        clearBuffer(input);
+        
+        System.out.println("\nQual o CPF do funcionário?");
+        int cpf = input.nextInt();
+        
+        clearBuffer(input);
+        
+        System.out.println("\nQual o telefone do funcionário?");
+        int telefone = input.nextInt();
+        
+        clearBuffer(input);
+        
+        System.out.println("\nQual o email do funcionário?");
+        String email = input.nextLine();
+        
+        clearBuffer(input);
+        
+        if (nome.isEmpty()||idade<0||cpf<0||telefone<0||email.isEmpty())
         {
-            System.out.println("Um dos dados informados está inválido. Não são permitidos valores vazios ou negativos.");
+            System.out.println("\nUm dos dados informados está inválido. Não são permitidos valores vazios ou negativos. Reiniciando operação.");
+            cadastrarFuncionario();
         }
         else {
             idf++;
             Funcionario f = new Funcionario(idf, nome, idade, cpf, telefone, email); 
             funcArray.add(f);
         }
-        System.out.println("Operação Finalizada. Deseja voltar ao item de adicionar funcionário? 1 = Sim; 2 = Não");
+        System.out.println("\nOperação Finalizada. Deseja voltar ao item de adicionar funcionário? 1 = Sim; 2 = Não");
         int s = input.nextInt();
         switch (s) {
             case 1:
@@ -269,26 +343,27 @@ public class MarketSystem {
                 menu();
                 break;
             default:
-                System.out.println("Não é uma entrada válida. Por padrão, voltando ao menu.");
+                System.out.println("\nNão é uma entrada válida. Por padrão, voltando ao menu.");
                 menu();
                 break;
         }
     }
     
     public static void apagarFuncionario() {
-        input.nextLine();
+        clearBuffer(input);
+        
         boolean found=false;
-        System.out.println("Qual o ID do funcionário a ser removido?");
+        System.out.println("\nQual o ID do funcionário a ser removido?");
         int value = input.nextInt();
         for (Funcionario f: funcArray) {
             if(f.getId()==value) {
-                clientArray.remove(f);
+                funcArray.remove(f);
                 found=true;
                 break;
             }
         }
         if (!found) {
-            System.out.println("Nenhum ID encontrado. Deseja voltar ao item de remover funcionários? 1 = Sim; 2 = Não");
+            System.out.println("\nNenhum ID encontrado. Deseja retomar a operação? 1 = Sim; 2 = Não");
             int s = input.nextInt();
             switch (s) {
                 case 1:
@@ -298,11 +373,11 @@ public class MarketSystem {
                     menu();
                     break;
                 default:
-                    System.out.println("Não é uma entrada válida. Por padrão, voltando ao menu.");
+                    System.out.println("\nNão é uma entrada válida. Por padrão, voltando ao menu.");
                     menu();
             }
         }
-        System.out.println("Operação Finalizada. Deseja voltar ao item de apagar funcionário? 1 = Sim; 2 = Não");
+        System.out.println("\nOperação Finalizada. Deseja apagar mais algum registro? 1 = Sim; 2 = Não");
         int s = input.nextInt();
         switch (s) {
             case 1:
@@ -312,16 +387,16 @@ public class MarketSystem {
                 menu();
                 break;
             default:
-                System.out.println("Não é uma entrada válida. Por padrão, voltando ao menu.");
+                System.out.println("\nNão é uma entrada válida. Por padrão, voltando ao menu.");
                 menu();
                 break;
         }
     }
     
     public static void apagarCliente() {
-        input.nextLine();
+        clearBuffer(input);
         boolean found=false;
-        System.out.println("Qual o ID do cliente a ser removido?");
+        System.out.println("\nQual o ID do cliente a ser removido?");
         int value = input.nextInt();
         for (Cliente c: clientArray) {
             if(c.getId()==value) {
@@ -331,7 +406,7 @@ public class MarketSystem {
             }
         }
             if (!found) {
-                System.out.println("Nenhum ID encontrado. Deseja voltar ao item de remover clientes? 1 = Sim; 2 = Não");
+                System.out.println("\nNenhum ID encontrado. Deseja reiniciar a operação? 1 = Sim; 2 = Não");
                 int s = input.nextInt();
                 switch (s) {
                 case 1:
@@ -341,12 +416,12 @@ public class MarketSystem {
                     menu();
                     break;
                 default:
-                    System.out.println("Não é uma entrada válida. Por padrão, voltando ao menu.");
+                    System.out.println("\nNão é uma entrada válida. Por padrão, voltando ao menu.");
                     menu();
                     break;
                 }
             }
-        System.out.println("Operação Finalizada. Deseja voltar ao item de remover clientes? 1 = Sim; 2 = Não");
+        System.out.println("\nOperação Finalizada. Deseja remover mais algum cliente? 1 = Sim; 2 = Não");
         int a = input.nextInt();
             switch (a) {
                 case 1:
@@ -356,13 +431,14 @@ public class MarketSystem {
                     menu();
                     break;
                 default:
-                    System.out.println("Não é uma entrada válida. Por padrão, voltando ao menu.");
+                    System.out.println("\nNão é uma entrada válida. Por padrão, voltando ao menu.");
                     menu();
                     break;
                 }
             }
     
     public static void mostraCliente() {
+        System.out.println("\nMostrando todos os clientes registrados:\n");
         for (Cliente c: clientArray) {
             c.exibir();
         }
@@ -371,6 +447,7 @@ public class MarketSystem {
     }
     
     public static void mostraFuncionario() {
+        System.out.println("\nMostrando todos os funcionários registrados:\n");
         for (Funcionario f: funcArray) {
             f.exibir();
         }
@@ -379,32 +456,42 @@ public class MarketSystem {
     }
     
     public static void cadastrarProduto() {
-        input.nextLine();
-        System.out.println("Qual o código do produto?");
+        clearBuffer(input);
+        System.out.println("\nQual o código do produto?");
         long cod = input.nextLong();
-        clearBuffer(input);
-        System.out.println("Qual a marca do produto?");
-        String marca = input.nextLine();
-        clearBuffer(input);
-        System.out.println("Qual a descrição do produto?");
-        String desc = input.nextLine();
-        clearBuffer(input);
-        System.out.println("Em qual corredor o produto está?");
-        int corredor = input.nextInt();
-        clearBuffer(input);
-        System.out.println("Qual o preço do produto?");
-        double valor = input.nextDouble();
+        
         clearBuffer(input);
         
-        if (marca == null||corredor<0||valor<0||cod<0||desc == null)
+        System.out.println("\nQual a marca do produto?");
+        String marca = input.nextLine();
+        
+        clearBuffer(input);
+        
+        System.out.println("\nQual a descrição do produto?");
+        String desc = input.nextLine();
+        
+        clearBuffer(input);
+        
+        System.out.println("\nEm qual corredor o produto está?");
+        int corredor = input.nextInt();
+        
+        clearBuffer(input);
+        
+        System.out.println("\nQual o preço do produto?");
+        double valor = input.nextDouble();
+        
+        clearBuffer(input);
+        
+        if (marca.isEmpty()||corredor<0||valor<0||cod<0||desc.isEmpty())
         {
-            System.out.println("Um dos dados informados está inválido. Não são permitidos valores vazios ou negativos.");
+            System.out.println("\nUm dos dados informados está inválido. Não são permitidos valores vazios ou negativos. Reiniciando operação");
+            cadastrarFuncionario();
         }
         else {
             Produto p = new Produto(cod, marca, desc, corredor, valor); 
             productArray.add(p);
         }
-        System.out.println("Operação Finalizada. Deseja voltar ao item de adicionar funcionário? 1 = Sim; 2 = Não");
+        System.out.println("\nOperação Finalizada. Deseja cadastrar mais algum funcionário? 1 = Sim; 2 = Não");
         int s = input.nextInt();
         switch (s) {
             case 1:
@@ -414,16 +501,16 @@ public class MarketSystem {
                 menu();
                 break;
             default:
-                System.out.println("Não é uma entrada válida. Por padrão, voltando ao menu.");
+                System.out.println("\nNão é uma entrada válida. Por padrão, voltando ao menu.");
                 menu();
                 break;
         }   
     }
     
     public static void apagarProduto() {
-        input.nextLine();
+        clearBuffer(input);
         boolean found=false;
-        System.out.println("Qual o código do produto a ser removido?");
+        System.out.println("\nQual o código do produto a ser removido?");
         int value = input.nextInt();
         for (Produto p: productArray) {
             if(p.getCod()==value) {
@@ -433,7 +520,7 @@ public class MarketSystem {
             }
         }
             if (!found) {
-                System.out.println("Nenhum ID encontrado. Deseja voltar ao item de remover produtos? 1 = Sim; 2 = Não");
+                System.out.println("\nNenhum ID encontrado. Deseja reiniciar a operação? 1 = Sim; 2 = Não");
                 int s = input.nextInt();
                 switch (s) {
                 case 1:
@@ -443,12 +530,12 @@ public class MarketSystem {
                     menu();
                     break;
                 default:
-                    System.out.println("Não é uma entrada válida. Por padrão, voltando ao menu.");
+                    System.out.println("\nNão é uma entrada válida. Por padrão, voltando ao menu.");
                     menu();
                     break;
                 }
             }
-        System.out.println("Operação Finalizada. Deseja voltar ao item de remover produtos? 1 = Sim; 2 = Não");
+        System.out.println("\nOperação Finalizada. Deseja remover mais algum produto? 1 = Sim; 2 = Não");
         int a = input.nextInt();
             switch (a) {
                 case 1:
@@ -458,13 +545,14 @@ public class MarketSystem {
                     menu();
                     break;
                 default:
-                    System.out.println("Não é uma entrada válida. Por padrão, voltando ao menu.");
+                    System.out.println("\nNão é uma entrada válida. Por padrão, voltando ao menu.");
                     menu();
                     break;
                 }
     }
     
     public static void mostraProduto() {
+        System.out.println("\nMostrando produtos cadastrados:\n");
         for (Produto p: productArray) {
             p.exibir();
         }
@@ -473,15 +561,18 @@ public class MarketSystem {
     }
     
     public static void buscaProdutoDesc() {
-        input.nextLine();
+        clearBuffer(input);
         
         boolean found=false;
         
-        System.out.println("Digite a descrição (ou parte da descrição) do produto");
+        System.out.println("\nDigite a descrição (ou parte da descrição) do produto:");
         String desc = input.nextLine();
+        
+        clearBuffer(input);
         
         for(Produto p: productArray) {
             if (p.getDesc().contains(desc)) {
+                System.out.println("\nRegistro encontrado:");
                 p.exibir();
                 found=true;
                 break;
@@ -489,7 +580,7 @@ public class MarketSystem {
         }
         
         if (!found) {
-            System.out.println("Nenhum registro encontrado. Deseja reiniciar a operação ou sair? 1 = Reiniciar; 2 = Sair.");
+            System.out.println("\nNenhum registro encontrado. Deseja reiniciar a operação? 1 = Reiniciar; 2 = Sair.");
             int a = input.nextInt();
             switch(a) {
                 case 1:
@@ -499,22 +590,22 @@ public class MarketSystem {
                     menu();
                     break;
                 default:
-                    System.out.println("Entrada inválida. Por padrão, voltando ao menu.");
+                    System.out.println("\nEntrada inválida. Por padrão, voltando ao menu.");
                     menu();
             }
         }
         
-        System.out.println("Operação Finalizada. Deseja voltar ao item buscar cliente? 1 = Sim; 2 = Não");
+        System.out.println("\nOperação Finalizada. Deseja buscar mais algum produto? 1 = Sim; 2 = Não");
         int s = input.nextInt();
         switch (s) {
             case 1:
-                buscaProdutoDesc();
+                buscaProduto();
                 break;
             case 2:
                 menu();
                 break;
             default:
-                System.out.println("Não é uma entrada válida. Por padrão, voltando ao menu.");
+                System.out.println("nNão é uma entrada válida. Por padrão, voltando ao menu.");
                 menu();
                 break;
         }
@@ -522,15 +613,16 @@ public class MarketSystem {
     }
     
     public static void buscaProdutoCod() {
-        input.nextLine();
+        clearBuffer(input);
         
         boolean found=false;
         
-        System.out.println("Digite o código do produto");
+        System.out.println("\nDigite o código do produto:");
         long cod = input.nextLong();
         
         for(Produto p: productArray) {
             if (p.getCod() == cod) {
+                System.out.println("\nRegistro encontrado:");
                 p.exibir();
                 found=true;
                 break;
@@ -538,7 +630,7 @@ public class MarketSystem {
         }
         
         if (!found) {
-            System.out.println("Nenhum registro encontrado. Deseja reiniciar a operação ou sair? 1 = Reiniciar; 2 = Sair.");
+            System.out.println("\nNenhum registro encontrado. Deseja reiniciar a operação? 1 = Reiniciar; 2 = Sair.");
             int a = input.nextInt();
             switch(a) {
                 case 1:
@@ -548,22 +640,22 @@ public class MarketSystem {
                     menu();
                     break;
                 default:
-                    System.out.println("Entrada inválida. Por padrão, voltando ao menu.");
+                    System.out.println("\nEntrada inválida. Por padrão, voltando ao menu.");
                     menu();
             }
         }
         
-        System.out.println("Operação Finalizada. Deseja voltar ao item buscar cliente? 1 = Sim; 2 = Não");
+        System.out.println("\nOperação Finalizada. Deseja buscar mais algum produto? 1 = Sim; 2 = Não");
         int s = input.nextInt();
         switch (s) {
             case 1:
-                buscaProdutoCod();
+                buscaProduto();
                 break;
             case 2:
                 menu();
                 break;
             default:
-                System.out.println("Não é uma entrada válida. Por padrão, voltando ao menu.");
+                System.out.println("\nNão é uma entrada válida. Por padrão, voltando ao menu.");
                 menu();
                 break;
         }
@@ -571,15 +663,16 @@ public class MarketSystem {
     }
     
     public static void buscaProdutoValor() {
-        input.nextLine();
+        clearBuffer(input);
         
         boolean found=false;
         
-        System.out.println("Digite o preço do produto");
+        System.out.println("\nDigite o preço do produto:");
         double val = input.nextDouble();
         
         for(Produto p: productArray) {
             if (p.getValor() == val) {
+                System.out.println("Registro encontrado:");
                 p.exibir();
                 found=true;
                 break;
@@ -587,7 +680,7 @@ public class MarketSystem {
         }
         
         if (!found) {
-            System.out.println("Nenhum registro encontrado. Deseja reiniciar a operação ou sair? 1 = Reiniciar; 2 = Sair.");
+            System.out.println("Nenhum registro encontrado. Deseja reiniciar a operação? 1 = Reiniciar; 2 = Sair.");
             int a = input.nextInt();
             switch(a) {
                 case 1:
@@ -602,11 +695,11 @@ public class MarketSystem {
             }
         }
         
-        System.out.println("Operação Finalizada. Deseja voltar ao item buscar cliente? 1 = Sim; 2 = Não");
+        System.out.println("Operação Finalizada. Deseja buscar mais algum produto? 1 = Sim; 2 = Não");
         int s = input.nextInt();
         switch (s) {
             case 1:
-                buscaProdutoValor();
+                buscaProduto();
                 break;
             case 2:
                 menu();
@@ -619,10 +712,10 @@ public class MarketSystem {
     }
     
     public static void maiorValor() {
-        input.nextLine();
+        clearBuffer(input);
         
         if(productArray.isEmpty()) {
-            System.out.println("Não há nenhum produto cadastrado. Voltando ao menu.");
+            System.out.println("\nNão há nenhum produto cadastrado. Voltando ao menu.");
             menu();
         }
         else {
@@ -635,7 +728,7 @@ public class MarketSystem {
                 p1 = p;
             }
         }
-            System.out.println("Produto mais caro:");
+        System.out.println("\nProduto mais caro:");
         p1.exibir();
         }
         System.out.println("\nOperação Finalizada. Voltando ao menu.");
@@ -643,10 +736,10 @@ public class MarketSystem {
     }
     
     public static void menorValor() {
-        input.nextLine();
+        clearBuffer(input);
         
         if(productArray.isEmpty()) {
-            System.out.println("Não há nenhum produto cadastrado. Voltando ao menu.");
+            System.out.println("\nNão há nenhum produto cadastrado. Voltando ao menu.");
             menu();
         }
         else {
@@ -659,7 +752,7 @@ public class MarketSystem {
                 p1 = p;
             }
         }
-            System.out.println("Produto mais barato:");
+            System.out.println("\nProduto mais barato:");
         p1.exibir();
         }
         System.out.println("\nOperação Finalizada. Voltando ao menu.");
@@ -667,22 +760,31 @@ public class MarketSystem {
     }
     
     public static void mediaValor() {
-        input.nextLine();
-        
+        clearBuffer(input);
+        if(productArray.isEmpty()) {
+            System.out.println("\nNão há nenhum produto cadastrado. Voltando ao menu.");
+            menu();
+        }
+        else {
         double med=0;
         
         for (Produto p: productArray) {
             med += p.getValor();
         }
         med = med/productArray.size();
-        System.out.println("Média: R$" + med);   
-        
+        System.out.println("\nMédia: R$" + med);   
+        }
         System.out.println("\nOperação Finalizada. Voltando ao menu.");
         menu();
     }
     
     public static void acimaMedia() {
-        input.nextLine();
+        clearBuffer(input);
+        if(productArray.isEmpty()) {
+            System.out.println("\nNão há nenhum produto cadastrado. Voltando ao menu.");
+            menu();
+        }
+        else {
         double med=0;
         int a=0;
         
@@ -696,8 +798,8 @@ public class MarketSystem {
                 a++;
         }
         
-        System.out.println("Quantidade de produtos com preço acima da média: " + a);
-        
+        System.out.println("\nQuantidade de produtos com preço acima da média: " + a);
+        }
         System.out.println("\nOperação Finalizada. Voltando ao menu.");
         menu();
     }
@@ -709,7 +811,12 @@ public class MarketSystem {
     }
     
     public static void maiorIdade() {
-        input.nextLine();
+        clearBuffer(input);
+        if(clientArray.isEmpty()) {
+            System.out.println("\nNão há nenhum cliente cadastrado. Voltando ao menu.");
+            menu();
+        }
+        else {
         
         Cliente c1;
         c1 = clientArray.get(0);
@@ -719,15 +826,21 @@ public class MarketSystem {
                 c1 = c;
         }
         
-        System.out.println("Cliente de maior idade:");
+        System.out.println("\nCliente de maior idade:");
         c1.exibir();
-        
+        }
         System.out.println("\nOperação Finalizada. Voltando ao menu.");
         menu();
     }
     
     public static void menorIdade() {
-        input.nextLine();
+        clearBuffer(input);
+        
+        if(clientArray.isEmpty()) {
+            System.out.println("\nNão há nenhum cliente cadastrado. Voltando ao menu.");
+            menu();
+        }
+        else {
         
         Cliente c1;
         c1 = clientArray.get(0);
@@ -737,43 +850,58 @@ public class MarketSystem {
                 c1 = c;
         }
         
-        System.out.println("Cliente de menor idade:");
+        System.out.println("\nCliente de menor idade:");
         c1.exibir();
-        
+        }
         System.out.println("\nOperação Finalizada. Voltando ao menu.");
         menu();
     }
     
     public static void clienteMaior() {
-        input.next();
+        clearBuffer(input);
+        if(clientArray.isEmpty()) {
+            System.out.println("\nNão há nenhum cliente cadastrado. Voltando ao menu.");
+            menu();
+        }
+        else {
         int a=0;
         
         for(Cliente c: clientArray) {
             if(c.getIdade()>60)
                 a++;
         }
-        System.out.println("Clientes com mais de 60 anos: " + a);
-        
+        System.out.println("\nClientes com mais de 60 anos: " + a);
+        }
         System.out.println("\nOperação Finalizada. Voltando ao menu.");
         menu();
     }
     
     public static void clienteMenor() {
-        input.next();
+        clearBuffer(input);
+        if(clientArray.isEmpty()) {
+            System.out.println("\nNão há nenhum cliente cadastrado. Voltando ao menu.");
+            menu();
+        }
+        else {
         int a=0;
         
         for(Cliente c: clientArray) {
             if(c.getIdade()<18)
                 a++;
         }
-        System.out.println("Clientes com menos de 18 anos: " + a);
-        
+        System.out.println("\nClientes com menos de 18 anos: " + a);
+        }
         System.out.println("\nOperação Finalizada. Voltando ao menu.");
         menu();
     }
     
     public static void idadeMedia() {
-        input.nextLine();
+        clearBuffer(input);
+        if(clientArray.isEmpty()) {
+            System.out.println("\nNão há nenhum cliente cadastrado. Voltando ao menu.");
+            menu();
+        }
+        else {
         double med=0;
         
         for(Cliente c: clientArray) {
@@ -781,7 +909,10 @@ public class MarketSystem {
         }
         
         med = med/clientArray.size();
-        System.out.println("Média da idade dos clientes: " + med);
+        System.out.println("\nMédia da idade dos clientes: " + med);
+        }
+        System.out.println("\nOperação Finalizada. Voltando ao menu.");
+        menu();
     }
     
     public static void main(String[] args) {
