@@ -7,7 +7,7 @@ public class MarketSystem {
     private static ArrayList<Cliente> clientArray;
     private static ArrayList<Funcionario> funcArray;
     private static ArrayList<Produto> productArray;
-    private static Scanner input = new Scanner(System.in);
+    private static final Scanner input = new Scanner(System.in);
     private static int idc,idf;
     
     public static void menu() {
@@ -40,7 +40,7 @@ public class MarketSystem {
                 break;
             case 4:
                 buscaCliente();
-                break
+                break;
             case 5:
                 mostraFuncionario();
                 break;
@@ -52,6 +52,7 @@ public class MarketSystem {
                 break;
             case 8:
                 buscaFuncionario();
+                break;
             case 9:
                 mostraProduto();
                 break;
@@ -317,7 +318,6 @@ public class MarketSystem {
         }
     }
     
-    
     public static void apagarCliente() {
         input.nextLine();
         boolean found=false;
@@ -464,7 +464,7 @@ public class MarketSystem {
                 }
     }
     
-    private static void mostraProduto() {
+    public static void mostraProduto() {
         for (Produto p: productArray) {
             p.exibir();
         }
@@ -616,58 +616,172 @@ public class MarketSystem {
                 menu();
                 break;
         }
-       
+    }
+    
     public static void maiorValor() {
         input.nextLine();
         
-        boolean found=false;
-        
-        int maior = productArray.get(0);
-        for (int i = 1; i < productArray.size(); i++) {
-            if (maior < getValor(i))
-                maior = getValor(i);
+        if(productArray.isEmpty()) {
+            System.out.println("Não há nenhum produto cadastrado. Voltando ao menu.");
+            menu();
         }
-        }
-        System.out.printf("Maior número é %d", maior);
+        else {
         
-        if (!found) {
-            System.out.println("Nenhum registro encontrado. Deseja reiniciar a operação ou sair? 1 = Reiniciar; 2 = Sair.");
-            int a = input.nextInt();
-            switch(a) {
-                case 1:
-                    buscaProdutoValor();
-                    break;
-                case 2:
-                    menu();
-                    break;
-                default:
-                    System.out.println("Entrada inválida. Por padrão, voltando ao menu.");
-                    menu();
+        Produto p1;
+        p1 = productArray.get(0);
+        
+        for(Produto p: productArray) {
+            if (p.getValor()>p1.getValor()) {
+                p1 = p;
             }
         }
-        
-        System.out.println("Operação Finalizada. Deseja voltar ao item buscar cliente? 1 = Sim; 2 = Não");
-        int s = input.nextInt();
-        switch (s) {
-            case 1:
-                buscaProdutoValor();
-                break;
-            case 2:
-                menu();
-                break;
-            default:
-                System.out.println("Não é uma entrada válida. Por padrão, voltando ao menu.");
-                menu();
-                break;
+            System.out.println("Produto mais caro:");
+        p1.exibir();
         }
-        
-        
+        System.out.println("\nOperação Finalizada. Voltando ao menu.");
+        menu();
     }
     
-      private static void clearBuffer(Scanner scanner) {
+    public static void menorValor() {
+        input.nextLine();
+        
+        if(productArray.isEmpty()) {
+            System.out.println("Não há nenhum produto cadastrado. Voltando ao menu.");
+            menu();
+        }
+        else {
+        
+        Produto p1;
+        p1 = productArray.get(0);
+        
+        for(Produto p: productArray) {
+            if (p.getValor()<p1.getValor()) {
+                p1 = p;
+            }
+        }
+            System.out.println("Produto mais barato:");
+        p1.exibir();
+        }
+        System.out.println("\nOperação Finalizada. Voltando ao menu.");
+        menu();
+    }
+    
+    public static void mediaValor() {
+        input.nextLine();
+        
+        double med=0;
+        
+        for (Produto p: productArray) {
+            med += p.getValor();
+        }
+        med = med/productArray.size();
+        System.out.println("Média: R$" + med);   
+        
+        System.out.println("\nOperação Finalizada. Voltando ao menu.");
+        menu();
+    }
+    
+    public static void acimaMedia() {
+        input.nextLine();
+        double med=0;
+        int a=0;
+        
+        for (Produto p: productArray) {
+            med += p.getValor();
+        }
+        med = med/productArray.size();
+        
+        for (Produto p: productArray) {
+            if (p.getValor()>med)
+                a++;
+        }
+        
+        System.out.println("Quantidade de produtos com preço acima da média: " + a);
+        
+        System.out.println("\nOperação Finalizada. Voltando ao menu.");
+        menu();
+    }
+    
+    public static void clearBuffer(Scanner scanner) {
         if (scanner.hasNextLine()) {
             scanner.nextLine();
         }
+    }
+    
+    public static void maiorIdade() {
+        input.nextLine();
+        
+        Cliente c1;
+        c1 = clientArray.get(0);
+        
+        for (Cliente c: clientArray) {
+            if (c1.getIdade()<c.getIdade())
+                c1 = c;
+        }
+        
+        System.out.println("Cliente de maior idade:");
+        c1.exibir();
+        
+        System.out.println("\nOperação Finalizada. Voltando ao menu.");
+        menu();
+    }
+    
+    public static void menorIdade() {
+        input.nextLine();
+        
+        Cliente c1;
+        c1 = clientArray.get(0);
+        
+        for (Cliente c: clientArray) {
+            if (c1.getIdade()>c.getIdade())
+                c1 = c;
+        }
+        
+        System.out.println("Cliente de menor idade:");
+        c1.exibir();
+        
+        System.out.println("\nOperação Finalizada. Voltando ao menu.");
+        menu();
+    }
+    
+    public static void clienteMaior() {
+        input.next();
+        int a=0;
+        
+        for(Cliente c: clientArray) {
+            if(c.getIdade()>60)
+                a++;
+        }
+        System.out.println("Clientes com mais de 60 anos: " + a);
+        
+        System.out.println("\nOperação Finalizada. Voltando ao menu.");
+        menu();
+    }
+    
+    public static void clienteMenor() {
+        input.next();
+        int a=0;
+        
+        for(Cliente c: clientArray) {
+            if(c.getIdade()<18)
+                a++;
+        }
+        System.out.println("Clientes com menos de 18 anos: " + a);
+        
+        System.out.println("\nOperação Finalizada. Voltando ao menu.");
+        menu();
+    }
+    
+    public static void idadeMedia() {
+        input.nextLine();
+        double med=0;
+        
+        for(Cliente c: clientArray) {
+            med += c.getIdade();
+        }
+        
+        med = med/clientArray.size();
+        System.out.println("Média da idade dos clientes: " + med);
     }
     
     public static void main(String[] args) {

@@ -7,6 +7,9 @@ public class Produto {
     private int corredor;
     private double valor;
 
+    public Produto() {
+    }
+
     public Produto(long cod, String marca, String desc, int corredor, double valor) {
         this.cod = cod;
         this.marca = marca;
