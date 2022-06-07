@@ -4,13 +4,13 @@ public class Produto {
     private long cod;
     private String marca;
     private String desc;
-    private int corredor;
+    private long corredor;
     private double valor;
 
     public Produto() {
     }
 
-    public Produto(long cod, String marca, String desc, int corredor, double valor) {
+    public Produto(long cod, String marca, String desc, long corredor, double valor) {
         this.cod = cod;
         this.marca = marca;
         this.desc = desc;
@@ -42,11 +42,11 @@ public class Produto {
         this.desc = desc;
     }
 
-    public int getCorredor() {
+    public long getCorredor() {
         return corredor;
     }
 
-    public void setCorredor(int corredor) {
+    public void setCorredor(long corredor) {
         this.corredor = corredor;
     }
 
@@ -59,6 +59,6 @@ public class Produto {
     }
     
     public void exibir() {
-        System.out.printf("Código: %d | Marca: %s | Descrição: %s | Corredor: %d | Preço: %f\n",getCod(),getMarca(),getDesc(),getCorredor(),getValor());
+        System.out.printf("Código: %d | Marca: %s | Descrição: %s | Corredor: %d | Preço: %.2f\n",getCod(),getMarca(),getDesc(),getCorredor(),getValor());
     }
 }

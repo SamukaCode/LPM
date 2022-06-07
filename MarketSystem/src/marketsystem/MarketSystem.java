@@ -1,6 +1,7 @@
 package marketsystem;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MarketSystem {
@@ -247,36 +248,46 @@ public class MarketSystem {
         clearBuffer(input);
         
         System.out.println("\nQual o nome do Cliente?");
-        String nome = input.nextLine();  
-        
-        clearBuffer(input);
+        String nome = input.nextLine();
         
         System.out.println("\nQual a Idade do Cliente?");
-        int idade = input.nextInt();
+        long idade=0;
+        try {
+        idade = input.nextInt();
+        if (idade<0)
+            throw new IllegalArgumentException();
+        } catch(IllegalArgumentException | InputMismatchException e) {
+            System.out.println("Idade inválida. Reiniciando operação.");
+            cadastrarCliente();
+        }
         
         clearBuffer(input);
         
         System.out.println("\nQual o CPF do Cliente?");
-        int cpf = input.nextInt();
-        
-        clearBuffer(input);
-        
-        System.out.println("\nQual o telefone do Cliente?");
-        int telefone = input.nextInt();
-        
-        clearBuffer(input);
-       
-        
-        if (nome.isEmpty()||idade<0||cpf<0||telefone<0)
-        {
-            System.out.println("\nUm dos dados informados está inválido. Não são permitidos valores vazios ou negativos. Reiniciando operação.");
+        long cpf=0;
+        try {
+        cpf = input.nextInt();
+        if (cpf<0)
+            throw new IllegalArgumentException();
+        } catch(IllegalArgumentException | InputMismatchException e) {
+            System.out.println("CPF inválido. Reiniciando operação.");
             cadastrarCliente();
         }
-        else {
+        
+        System.out.println("\nQual o telefone do Cliente?");
+        long telefone=0;
+        try {
+        telefone = input.nextInt();
+        if (telefone<0)
+            throw new IllegalArgumentException();
+        } catch(IllegalArgumentException | InputMismatchException e) {
+            System.out.println("Telefone inválido. Reiniciando operação.");
+            cadastrarCliente();
+        }
+        
             idc++;
             Cliente c = new Cliente(idc, nome, idade, cpf, telefone); 
             clientArray.add(c);
-        }
         System.out.println("\nOperação Finalizada. Deseja adicionar mais algum cliente? 1 = Sim; 2 = Não");
         int s = input.nextInt();
         switch (s) {
@@ -301,38 +312,50 @@ public class MarketSystem {
         System.out.println("\nQual o nome do funcionário?");
         String nome = input.nextLine();
         
-        clearBuffer(input);
+        
         
         System.out.println("\nQual a idade do funcionário?");
-        int idade = input.nextInt();
-        
-        clearBuffer(input);
-        
+        long idade=0;
+        try {
+        idade = input.nextInt();
+        if (idade<0)
+            throw new IllegalArgumentException();
+        } catch(IllegalArgumentException | InputMismatchException e) {
+            System.out.println("Idade inválida. Reiniciando operação.");
+            cadastrarFuncionario();
+        }
+
         System.out.println("\nQual o CPF do funcionário?");
-        int cpf = input.nextInt();
-        
-        clearBuffer(input);
+        long cpf=0;
+        try {
+        cpf = input.nextInt();
+        if (cpf<0)
+            throw new IllegalArgumentException();
+        } catch(IllegalArgumentException | InputMismatchException e) {
+            System.out.println("CPF inválido. Reiniciando operação.");
+            cadastrarFuncionario();
+        }
         
         System.out.println("\nQual o telefone do funcionário?");
-        int telefone = input.nextInt();
+        long telefone=0;
+        try {
+        telefone = input.nextInt();
+        if (telefone<0)
+            throw new IllegalArgumentException();
+        } catch(IllegalArgumentException | InputMismatchException e) {
+            System.out.println("Telefone inválido. Reiniciando operação.");
+            cadastrarFuncionario();
+        }
         
         clearBuffer(input);
         
         System.out.println("\nQual o email do funcionário?");
         String email = input.nextLine();
-        
-        clearBuffer(input);
-        
-        if (nome.isEmpty()||idade<0||cpf<0||telefone<0||email.isEmpty())
-        {
-            System.out.println("\nUm dos dados informados está inválido. Não são permitidos valores vazios ou negativos. Reiniciando operação.");
-            cadastrarFuncionario();
-        }
-        else {
+
             idf++;
             Funcionario f = new Funcionario(idf, nome, idade, cpf, telefone, email); 
             funcArray.add(f);
-        }
+        
         System.out.println("\nOperação Finalizada. Deseja voltar ao item de adicionar funcionário? 1 = Sim; 2 = Não");
         int s = input.nextInt();
         switch (s) {
@@ -350,7 +373,7 @@ public class MarketSystem {
     }
     
     public static void apagarFuncionario() {
-        clearBuffer(input);
+        
         
         boolean found=false;
         System.out.println("\nQual o ID do funcionário a ser removido?");
@@ -394,7 +417,7 @@ public class MarketSystem {
     }
     
     public static void apagarCliente() {
-        clearBuffer(input);
+        
         boolean found=false;
         System.out.println("\nQual o ID do cliente a ser removido?");
         int value = input.nextInt();
@@ -456,46 +479,56 @@ public class MarketSystem {
     }
     
     public static void cadastrarProduto() {
-        clearBuffer(input);
         System.out.println("\nQual o código do produto?");
-        long cod = input.nextLong();
+        long cod=0;
+        try {
+        clearBuffer(input);
+        cod = input.nextInt();
+        if (cod<0)
+            throw new IllegalArgumentException();
+        } catch(IllegalArgumentException | InputMismatchException e) {
+            System.out.println("Código inválido. Reiniciando operação.");
+            cadastrarProduto();
+        }
         
         clearBuffer(input);
         
         System.out.println("\nQual a marca do produto?");
         String marca = input.nextLine();
         
-        clearBuffer(input);
-        
         System.out.println("\nQual a descrição do produto?");
         String desc = input.nextLine();
         
-        clearBuffer(input);
-        
         System.out.println("\nEm qual corredor o produto está?");
-        int corredor = input.nextInt();
-        
-        clearBuffer(input);
+        long corredor=0;
+        try {
+        corredor = input.nextLong();
+        if (corredor<0)
+            throw new IllegalArgumentException();
+        } catch(IllegalArgumentException | InputMismatchException e) {
+            System.out.println("Corredor inválido. Reiniciando operação.");
+            cadastrarProduto();
+        }
         
         System.out.println("\nQual o preço do produto?");
-        double valor = input.nextDouble();
-        
-        clearBuffer(input);
-        
-        if (marca.isEmpty()||corredor<0||valor<0||cod<0||desc.isEmpty())
-        {
-            System.out.println("\nUm dos dados informados está inválido. Não são permitidos valores vazios ou negativos. Reiniciando operação");
-            cadastrarFuncionario();
+        double val=0;
+        try {
+        val = input.nextDouble();
+        if (val<0)
+            throw new IllegalArgumentException();
+        } catch(IllegalArgumentException | InputMismatchException e) {
+            System.out.println("Preço inválido. Reiniciando operação.");
+            cadastrarProduto();
         }
-        else {
-            Produto p = new Produto(cod, marca, desc, corredor, valor); 
+        
+            Produto p = new Produto(cod, marca, desc, corredor, val); 
             productArray.add(p);
-        }
-        System.out.println("\nOperação Finalizada. Deseja cadastrar mais algum funcionário? 1 = Sim; 2 = Não");
+        
+        System.out.println("\nOperação Finalizada. Deseja cadastrar mais algum produto? 1 = Sim; 2 = Não");
         int s = input.nextInt();
         switch (s) {
             case 1:
-                cadastrarFuncionario();
+                cadastrarProduto();
                 break;
             case 2:
                 menu();
@@ -508,7 +541,7 @@ public class MarketSystem {
     }
     
     public static void apagarProduto() {
-        clearBuffer(input);
+        
         boolean found=false;
         System.out.println("\nQual o código do produto a ser removido?");
         int value = input.nextInt();
@@ -561,14 +594,14 @@ public class MarketSystem {
     }
     
     public static void buscaProdutoDesc() {
-        clearBuffer(input);
+        
         
         boolean found=false;
         
         System.out.println("\nDigite a descrição (ou parte da descrição) do produto:");
         String desc = input.nextLine();
         
-        clearBuffer(input);
+        
         
         for(Produto p: productArray) {
             if (p.getDesc().contains(desc)) {
@@ -613,7 +646,7 @@ public class MarketSystem {
     }
     
     public static void buscaProdutoCod() {
-        clearBuffer(input);
+        
         
         boolean found=false;
         
@@ -663,7 +696,7 @@ public class MarketSystem {
     }
     
     public static void buscaProdutoValor() {
-        clearBuffer(input);
+        
         
         boolean found=false;
         
@@ -712,7 +745,6 @@ public class MarketSystem {
     }
     
     public static void maiorValor() {
-        clearBuffer(input);
         
         if(productArray.isEmpty()) {
             System.out.println("\nNão há nenhum produto cadastrado. Voltando ao menu.");
@@ -736,7 +768,7 @@ public class MarketSystem {
     }
     
     public static void menorValor() {
-        clearBuffer(input);
+        
         
         if(productArray.isEmpty()) {
             System.out.println("\nNão há nenhum produto cadastrado. Voltando ao menu.");
@@ -760,7 +792,7 @@ public class MarketSystem {
     }
     
     public static void mediaValor() {
-        clearBuffer(input);
+        
         if(productArray.isEmpty()) {
             System.out.println("\nNão há nenhum produto cadastrado. Voltando ao menu.");
             menu();
@@ -779,7 +811,7 @@ public class MarketSystem {
     }
     
     public static void acimaMedia() {
-        clearBuffer(input);
+        
         if(productArray.isEmpty()) {
             System.out.println("\nNão há nenhum produto cadastrado. Voltando ao menu.");
             menu();
@@ -811,7 +843,7 @@ public class MarketSystem {
     }
     
     public static void maiorIdade() {
-        clearBuffer(input);
+        
         if(clientArray.isEmpty()) {
             System.out.println("\nNão há nenhum cliente cadastrado. Voltando ao menu.");
             menu();
@@ -834,7 +866,7 @@ public class MarketSystem {
     }
     
     public static void menorIdade() {
-        clearBuffer(input);
+        
         
         if(clientArray.isEmpty()) {
             System.out.println("\nNão há nenhum cliente cadastrado. Voltando ao menu.");
@@ -858,7 +890,7 @@ public class MarketSystem {
     }
     
     public static void clienteMaior() {
-        clearBuffer(input);
+        
         if(clientArray.isEmpty()) {
             System.out.println("\nNão há nenhum cliente cadastrado. Voltando ao menu.");
             menu();
@@ -877,7 +909,7 @@ public class MarketSystem {
     }
     
     public static void clienteMenor() {
-        clearBuffer(input);
+        
         if(clientArray.isEmpty()) {
             System.out.println("\nNão há nenhum cliente cadastrado. Voltando ao menu.");
             menu();
@@ -896,7 +928,7 @@ public class MarketSystem {
     }
     
     public static void idadeMedia() {
-        clearBuffer(input);
+        
         if(clientArray.isEmpty()) {
             System.out.println("\nNão há nenhum cliente cadastrado. Voltando ao menu.");
             menu();

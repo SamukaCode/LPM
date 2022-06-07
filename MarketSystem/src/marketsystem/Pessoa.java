@@ -1,13 +1,13 @@
 package marketsystem;
 
 public abstract class Pessoa {
-    protected int id;
+    protected long id;
     protected String nome;
-    protected int idade;
-    protected int cpf;
-    protected int telefone;
+    protected long idade;
+    protected long cpf;
+    protected long telefone;
     
-    public Pessoa(int id, String nome, int idade, int cpf, int telefone) {
+    public Pessoa(long id, String nome, long idade, long cpf, long telefone) {
         this.nome = nome;
         this.idade = idade;
         this.cpf = cpf;
@@ -23,7 +23,7 @@ public abstract class Pessoa {
         this.nome = nome;
     }
 
-    public int getIdade() {
+    public long getIdade() {
         return idade;
     }
 
@@ -31,7 +31,7 @@ public abstract class Pessoa {
         this.idade = idade;
     }
 
-    public int getCpf() {
+    public long getCpf() {
         return cpf;
     }
 
@@ -39,7 +39,7 @@ public abstract class Pessoa {
         this.cpf = cpf;
     }
 
-    public int getTelefone() {
+    public long getTelefone() {
         return telefone;
     }
 
@@ -47,7 +47,7 @@ public abstract class Pessoa {
         this.telefone = telefone;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

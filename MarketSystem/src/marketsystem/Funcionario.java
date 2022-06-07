@@ -3,7 +3,7 @@ package marketsystem;
 public class Funcionario extends Pessoa implements IPessoa {
     private String email;
 
-    public Funcionario(int id, String nome, int idade, int cpf, int telefone, String email) {
+    public Funcionario(long id, String nome, long idade, long cpf, long telefone, String email) {
         super(id, nome, idade, cpf, telefone);
         this.email = email;
     }
