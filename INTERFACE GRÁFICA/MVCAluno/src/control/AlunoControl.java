@@ -1,7 +1,10 @@
 package control;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import model.Aluno;
+import model.DAO.AlunoDAO;
 
 public class AlunoControl {
     private ArrayList<Aluno> listaAl;
@@ -10,9 +13,11 @@ public class AlunoControl {
         listaAl = new ArrayList<>();
     }
     
-    public void cadastrarAluno(int ra, String nome) {
+    public void cadastrarAluno(int ra, String nome) throws SQLException {
         Aluno al = new Aluno(ra, nome);
-        listaAl.add(al);
+        AlunoDAO aldao = new AlunoDAO();
+        aldao.inserirAluno(al);
+        
     }
     
     public ArrayList<Aluno> buscarTodos() {

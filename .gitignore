@@ -44,3 +44,5 @@ hs_err_pid*
 /MarketSystem/dist/
 /INTERFACE GRÁFICA/mvcProduto/nbproject/private/
 /INTERFACE GRÁFICA/mvcProduto/build/
+/INTERFACE GRÁFICA/MVCAluno/build/
+/INTERFACE GRÁFICA/MVCAluno/nbproject/private/
