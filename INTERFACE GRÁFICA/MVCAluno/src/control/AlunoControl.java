@@ -17,7 +17,11 @@ public class AlunoControl {
         Aluno al = new Aluno(ra, nome);
         AlunoDAO aldao = new AlunoDAO();
         aldao.inserirAluno(al);
-        
+    }
+    
+    public void excluirAluno(int ra) throws SQLException {
+        AlunoDAO aldao = new AlunoDAO();
+        aldao.excluirAluno(ra);
     }
     
     public ArrayList<Aluno> buscarTodos() {
