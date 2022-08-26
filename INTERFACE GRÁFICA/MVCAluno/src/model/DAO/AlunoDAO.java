@@ -12,7 +12,7 @@ Connection con;
     public void inserirAluno(Aluno al) throws SQLException
     { 
             con = new Conexao().getConnection();
-            String sql = "Insert into AlunoJava (ra,nome) values (?,?)";
+            String sql = "INSERT INTO AlunoJava (ra,nome) VALUES (?,?)";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setInt(1, al.getRa());
             stmt.setString(2, al.getNome());
