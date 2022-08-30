@@ -10,7 +10,7 @@ import model.Hardware;
 public class HardwareDAO {
     Connection con;
     
-    public void inserirAluno(Hardware h) throws SQLException
+    public void inserirProduto(Hardware h) throws SQLException
     { 
             con = new Conexao().getConnection();
             String sql = "INSERT INTO HardwareJava (cod,marca,modelo,tipo,preco) VALUES (?,?,?,?,?)";
@@ -20,6 +20,16 @@ public class HardwareDAO {
             stmt.setString(3, h.getModelo());
             stmt.setString(4, h.getTipo());
             stmt.setDouble(5, h.getPreco());
+            stmt.execute();
+            stmt.close();
+            con.close();    
+    }
+    
+    public void excluirProduto(int cod) throws SQLException {
+            con = new Conexao().getConnection();
+            String sql = "DELETE FROM HardwareJava WHERE cod = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, cod);
             stmt.execute();
             stmt.close();
             con.close();    

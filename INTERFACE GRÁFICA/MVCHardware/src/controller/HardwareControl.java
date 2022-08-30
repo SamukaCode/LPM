@@ -16,8 +16,12 @@ public class HardwareControl {
     public void cadastrarProduto(int cod, String marca, String modelo, String tipo, double preco) throws SQLException {
         Hardware h = new Hardware(cod, marca, modelo, tipo, preco);
         HardwareDAO hadao = new HardwareDAO();
-        hadao.inserirAluno(h);
-        
+        hadao.inserirProduto(h);
+    }
+    
+    public void excluirProduto(int cod) throws SQLException {
+        HardwareDAO hadao = new HardwareDAO();
+        hadao.excluirProduto(cod);
     }
 
     
