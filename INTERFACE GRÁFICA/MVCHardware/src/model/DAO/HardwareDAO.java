@@ -3,7 +3,9 @@ package model.DAO;
 import conection.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import model.Hardware;
 
 
@@ -33,6 +35,27 @@ public class HardwareDAO {
             stmt.execute();
             stmt.close();
             con.close();    
+    }
+    
+    public ArrayList<Hardware> buscarProduto() throws SQLException {
+        ResultSet rs;
+        ArrayList<Hardware> lista = new ArrayList();
+        con = new Conexao().getConnection();
+        String sql = "SELECT * FROM HardwareJava";
+        PreparedStatement stmt = con.prepareStatement(sql);
+        rs = stmt.executeQuery();
+        while (rs.next()) {
+            int cod = rs.getInt("cod");
+            String marca = rs.getString("marca");
+            String modelo = rs.getString("modelo");
+            String tipo = rs.getString("preco");
+            Double preco = rs.getDouble("preco");
+            Hardware h = new Hardware(cod, marca, modelo, tipo, preco);
+            lista.add(h);
+        }
+        stmt.close();
+        con.close();
+        return lista;
     }
     
 }
