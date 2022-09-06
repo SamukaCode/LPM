@@ -48,7 +48,7 @@ public class HardwareDAO {
             int cod = rs.getInt("cod");
             String marca = rs.getString("marca");
             String modelo = rs.getString("modelo");
-            String tipo = rs.getString("preco");
+            String tipo = rs.getString("tipo");
             Double preco = rs.getDouble("preco");
             Hardware h = new Hardware(cod, marca, modelo, tipo, preco);
             lista.add(h);
@@ -56,6 +56,25 @@ public class HardwareDAO {
         stmt.close();
         con.close();
         return lista;
+    }
+    
+        public Hardware buscarProduto(int codig) throws SQLException {
+        ResultSet rs;
+        con = new Conexao().getConnection();
+        String sql = "SELECT * FROM HardwareJava WHERE cod = ?";
+        PreparedStatement stmt = con.prepareStatement(sql);
+        stmt.setInt(1, codig);
+        rs = stmt.executeQuery();
+        rs.first();
+        int cod = rs.getInt("cod");
+        String marca = rs.getString("marca");
+        String modelo = rs.getString("modelo");
+        String tipo = rs.getString("tipo");
+        Double preco = rs.getDouble("preco");
+        Hardware h = new Hardware(cod, marca, modelo, tipo, preco);
+        stmt.close();
+        con.close();
+        return h;
     }
     
 }

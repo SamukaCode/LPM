@@ -23,6 +23,15 @@ public class HardwareControl {
         HardwareDAO hadao = new HardwareDAO();
         hadao.excluirProduto(cod);
     }
-
+    
+    public ArrayList<Hardware> buscaProduto() throws SQLException {
+        HardwareDAO hadao = new HardwareDAO();
+        return (hadao.buscarProduto());
+    }
+    
+    public Hardware buscaProduto(int codig) throws SQLException {
+        HardwareDAO hadao = new HardwareDAO();
+        return (hadao.buscarProduto(codig));
+    }
     
 }

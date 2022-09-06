@@ -7,14 +7,13 @@ package view;
 
 import controller.HardwareControl;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Hardware;
 
-/**
- *
- * @author aluno
- */
 public class FrmHardware extends javax.swing.JFrame {
     HardwareControl hControl;
     /**
@@ -47,14 +46,14 @@ public class FrmHardware extends javax.swing.JFrame {
         txtPreco = new javax.swing.JTextField();
         btnCadastrar = new javax.swing.JButton();
         label1 = new java.awt.Label();
-        txtExcluir = new javax.swing.JTextField();
+        txtCodAction = new javax.swing.JTextField();
         lblCodEx = new javax.swing.JLabel();
-        label2 = new java.awt.Label();
         btnExcluir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        tblHard = new javax.swing.JTable();
+        btnBuscaTodos = new javax.swing.JButton();
         label3 = new java.awt.Label();
+        btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -99,11 +98,10 @@ public class FrmHardware extends javax.swing.JFrame {
         label1.setFont(new java.awt.Font("Dialog", 1, 3)); // NOI18N
         label1.setText("_________________________________________________________________________________________________________________________________________________________________________");
 
+        txtCodAction.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+
         lblCodEx.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCodEx.setText("Código:");
-
-        label2.setFont(new java.awt.Font("Dialog", 1, 3)); // NOI18N
-        label2.setText("_________________________________________________________________________________________________________________________________________________________________________");
 
         btnExcluir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnExcluir.setText("Excluir");
@@ -113,21 +111,39 @@ public class FrmHardware extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblHard.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Código", "Marca", "Modelo", "Tipo", "Preço"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton1.setText("Buscar Todos");
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblHard);
+
+        btnBuscaTodos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnBuscaTodos.setText("Buscar Todos");
+        btnBuscaTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscaTodosActionPerformed(evt);
+            }
+        });
+
+        btnBuscar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -136,14 +152,6 @@ public class FrmHardware extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(txtExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(lblCodEx)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -164,13 +172,21 @@ public class FrmHardware extends javax.swing.JFrame {
                                 .addComponent(txtModelo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addComponent(btnCadastrar))
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(lblCodEx)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(txtCodAction, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnBuscaTodos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
         );
         layout.setVerticalGroup(
@@ -208,16 +224,20 @@ public class FrmHardware extends javax.swing.JFrame {
                         .addComponent(lblCodEx)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                            .addComponent(txtExcluir))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCodAction, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 30, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnBuscaTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
                 .addContainerGap())
         );
 
@@ -252,8 +272,13 @@ public class FrmHardware extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        int cod = Integer.parseInt(txtExcluir.getText());
-        int reply = JOptionPane.showConfirmDialog(null, "Deseja mesmo excluir o hardware de código " + cod + "?", "Aviso do Sistema!", JOptionPane.YES_NO_OPTION);
+        if (txtCodAction.getText().equals(""))
+            JOptionPane.showMessageDialog(null, "Preencha o campo código ao lado.");
+        else {
+        int cod = Integer.parseInt(txtCodAction.getText());
+        int reply = JOptionPane.showConfirmDialog(null, 
+                "Deseja mesmo excluir o hardware de código " + cod + "?",
+                "Aviso do Sistema!", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
             try {
                 hControl.excluirProduto(cod);
@@ -261,10 +286,43 @@ public class FrmHardware extends javax.swing.JFrame {
                 Logger.getLogger(FrmHardware.class.getName()).log(Level.SEVERE, null, ex);
             }
             JOptionPane.showMessageDialog(null, "Exclusão feita com sucesso!");
-            this.txtExcluir.setText("");
-            this.txtExcluir.requestFocus();
+            this.txtCodAction.setText("");
+            this.txtCodAction.requestFocus();
+        }
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnBuscaTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaTodosActionPerformed
+            ArrayList<Hardware> listaH;
+            try {
+                listaH = hControl.buscaProduto();
+                DefaultTableModel dados = (DefaultTableModel) tblHard.getModel();
+                dados.setNumRows(0);
+                for(Hardware h: listaH) {
+                    dados.addRow(new Object[]{h.getCod(),h.getMarca(),h.getModelo(),h.getTipo(),h.getPreco()});
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Não foi possível exibir os produtos.");
+            }
+        
+        
+    }//GEN-LAST:event_btnBuscaTodosActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        if (txtCodAction.getText().equals(""))
+            JOptionPane.showMessageDialog(null, "Preencha o campo código ao lado.");
+        else {
+        Hardware h;
+        try {
+            h = hControl.buscaProduto(Integer.parseInt(txtCodAction.getText()));
+            DefaultTableModel dados = (DefaultTableModel) tblHard.getModel();
+            dados.setNumRows(0);
+            dados.addRow(new Object[]{h.getCod(),h.getMarca(),h.getModelo(),h.getTipo(),h.getPreco()});
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmHardware.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }   
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -302,14 +360,13 @@ public class FrmHardware extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscaTodos;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnExcluir;
-    private javax.swing.JButton jButton1;
     private javax.swing.JColorChooser jColorChooser1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private java.awt.Label label1;
-    private java.awt.Label label2;
     private java.awt.Label label3;
     private javax.swing.JLabel lblCod;
     private javax.swing.JLabel lblCodEx;
@@ -317,8 +374,9 @@ public class FrmHardware extends javax.swing.JFrame {
     private javax.swing.JLabel lblModelo;
     private javax.swing.JLabel lblPreco;
     private javax.swing.JLabel lblTipo;
+    private javax.swing.JTable tblHard;
     private javax.swing.JTextField txtCod;
-    private javax.swing.JTextField txtExcluir;
+    private javax.swing.JTextField txtCodAction;
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtPreco;
