@@ -5,6 +5,7 @@ public class Hardware {
     private String marca;
     private String modelo;
     private String tipo;
+    private Double preco;
 
     public Hardware(int cod, String marca, String modelo, String tipo, Double preco) {
         this.cod = cod;
@@ -13,7 +14,6 @@ public class Hardware {
         this.tipo = tipo;
         this.preco = preco;
     }
-    private Double preco;
 
     public int getCod() {
         return cod;
