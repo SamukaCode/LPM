@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Cliente;
-import com.example.demo.repository.ClienteRepository;
+import com.example.demo.model.Passagem;
+import com.example.demo.repository.PassagemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +14,10 @@ import java.util.List;
 public class PassagemController {
 
     @Autowired
-    ClienteRepository passRepo;
+    PassagemRepository passRepo;
 
     @GetMapping (value="/all")
-    public List<Cliente> buscartodos() {
+    public List<Passagem> buscartodos() {
         return passRepo.findAll();
     }
 }
