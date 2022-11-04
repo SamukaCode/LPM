@@ -30,4 +30,30 @@ public class AlunoController {
     public void inserirAlunos(@RequestBody Aluno al) {
         alRepo.save(al);
     }
+
+    @DeleteMapping ("/remover")
+    public void deletaAluno(@RequestBody Aluno al) {
+        alRepo.delete(al);
+    }
+
+    @PutMapping ("/atualizar")
+    public void atualizarAluno(@RequestBody Aluno al) {
+        alRepo.save(al);
+
+    }
+
+    @GetMapping ("/nome/{nome}")
+    public List<Aluno> listaPorNome (@PathVariable (value="nome") String nome) {
+        return alRepo.findByNome(nome);
+    }
+
+    @GetMapping ("/raMaior/{ra}")
+    public List<Aluno> listarPorRaMaior (@PathVariable (value="ra") int ra) {
+        return alRepo.findByRaMaior(ra);
+    }
+
+    @GetMapping ("/nomeEspec/{nome}")
+    public List<Aluno> listarPorNomeEspec (@PathVariable (value="nome") String nome) {
+        return alRepo.findByNomeEspec(nome);
+    }
 }
