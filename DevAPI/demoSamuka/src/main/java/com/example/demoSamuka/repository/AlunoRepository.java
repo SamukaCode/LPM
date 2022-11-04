@@ -16,5 +16,8 @@ public interface AlunoRepository extends JpaRepository <Aluno,Integer> {
     @Query (value=" SELECT a FROM Aluno a WHERE a.nome like %?1%")
     public List<Aluno> findByNomeEspec (String nome);
 
+    @Query (value="SELECT a.nome FROM Aluno a WHERE a.ra > ?1 AND a.nome LIKE %?2%")
+    public List<String> findByRaNome (int ra, String nome);
+
 }
 
